@@ -24,4 +24,11 @@ public final class ConstantsUIElements {
     //INPUT
     public static final String LABEL_CONTAINS_AND_INPUT = "//label[contains(text(),' {value} ')]//input";
 
+    //Static values
+    public static final String DIV_TOTAL_CAR_STATIC = "//div[@class='cc-motorization-comparsion-status__info-text']";
+    public static final String TOTAL_CAR_PAGINATION_STATIC = "//div[@class='cc-motorization-header__price cc-text ng-star-inserted']";
+
+    public static final String INNER_TEXT = "innerText";
+    public static final String POUNDS_SIGN = "£";
+
 }

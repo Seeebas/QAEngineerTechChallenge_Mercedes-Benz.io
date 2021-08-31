@@ -16,5 +16,25 @@ public final class Constants {
     public static final String JAVAEXECUTOR_SCROLLVIEW = "arguments[0].scrollIntoView(true)";
     public static final String JAVAEXECUTOR_CLICK = "arguments[0].click();";
 
+    public static final String USER_DIR = "user.dir";
+    public static final String PNG = ".png";
+    public static final String FOLDER_REPORT = "report";
+    public static final String REPORT_EXEL_NAME = "ResultReport.xlsx";
+    public static final String DASH = "/";
+
+    public static final String PASSED = "Passed";
+    public static final String FAILED = "Failed";
+
+    public static final List<String> getExcelHeaders(){
+
+        List<String> list = new ArrayList<>();
+        list.add("TestID");
+        list.add("Execution Date");
+        list.add("Expected Result");
+        list.add("Actual Result");
+        list.add("Final Result");
+
+        return list;
+    }
     
 }

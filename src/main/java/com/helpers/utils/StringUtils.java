@@ -18,4 +18,8 @@ public class StringUtils {
         }
         return sb.toString();
     }
+
+    public static String splitByAndGetIndex(String value, String by, int index){
+        return value.split(by)[index];
+    }
 }

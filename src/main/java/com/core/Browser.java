@@ -1,21 +1,28 @@
-package com.helpers.core;
+package com.core;
 
 import com.helpers.constants.Constants;
 import com.helpers.constants.ConstantsUIElements;
+import com.helpers.utils.FilesUtils;
 import com.helpers.utils.StringUtils;
-import io.cucumber.java.en_old.Ac;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import com.helpers.write.Report;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Logger;
+
 public class Browser {
+
+    private final static Logger logger = Logger.getLogger(Report.class.getName());
 
     private WebDriver driver;
     private WebDriverWait wait;
@@ -113,5 +120,52 @@ public class Browser {
         JavascriptExecutor executor = (JavascriptExecutor)driver;
 
         executor.executeScript(Constants.JAVAEXECUTOR_CLICK, element);
+    }
+
+    public List<Double> getAllPaginationCarAmount(){
+
+        String initValue = driver.findElement(By.xpath(ConstantsUIElements.DIV_TOTAL_CAR_STATIC)).getText();
+
+        List<WebElement> listElem = driver.findElements(By.xpath(ConstantsUIElements.TOTAL_CAR_PAGINATION_STATIC));
+        List<Double> listAmount = new ArrayList<>();
+
+        for(WebElement ele : listElem) {
+            listAmount.add(
+                    Double.parseDouble(ele.getAttribute(ConstantsUIElements.INNER_TEXT)
+                            .replace(ConstantsUIElements.POUNDS_SIGN,"")
+                            .replace(",",".")));
+        }
+
+        return initValue.contains(String.valueOf(listAmount.size())) ? listAmount : null;
+    }
+
+    public boolean takeScreenshot(String screenshotName) {
+
+        TakesScreenshot screenshot = (TakesScreenshot) driver;
+
+        try{
+            File sourceScreenshot = screenshot.getScreenshotAs(OutputType.FILE);
+
+            FilesUtils.createFolderIfNotExist();
+
+            String path = StringUtils.concatenate(
+                    System.getProperty(Constants.USER_DIR),
+                    Constants.DASH,
+                    Constants.FOLDER_REPORT,
+                    Constants.DASH,
+                    screenshotName,
+                    Constants.PNG);
+
+            File destinationPath = new File(path);
+
+            Files.copy(sourceScreenshot.toPath(),destinationPath.toPath(),StandardCopyOption.REPLACE_EXISTING);
+
+            return true;
+        }catch (IOException e){
+            logger.warning("ERROR: " + e.getMessage());
+        }
+
+        return false;
+
     }
 }
