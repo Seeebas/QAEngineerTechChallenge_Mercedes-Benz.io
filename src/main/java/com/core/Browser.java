@@ -8,6 +8,8 @@ import com.helpers.write.Report;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -38,6 +40,7 @@ public class Browser {
                 initChromeOptions(mainPath);
                 break;
             case Constants.DRIVER_FIREFOX:
+                initFirefoxOptions(mainPath);
                 break;
             default:
                 break;
@@ -67,12 +70,11 @@ public class Browser {
     public void defaultAcceptCookies(){
 
         WebElement element = driver.findElement(By.tagName(ConstantsUIElements.SHADOWROOT_TAGNAME_ACCEPTCOOKIES));
-        WebElement ele = (WebElement) ((JavascriptExecutor) driver)
-                .executeScript(Constants.JAVAEXECUTOR_SHADOWROOT,element);
+        List<WebElement> ele = (List<WebElement>) ((JavascriptExecutor) driver).executeScript(Constants.JAVAEXECUTOR_SHADOWROOT,element);
 
         waitUntilBy(By.linkText(ConstantsUIElements.TOPMENU_OURCARS_VALUE));
 
-        ele.findElement(By.cssSelector(ConstantsUIElements.CSSSELECTOR_FOR_ACCEPTALLCOOKIES)).click();
+        ele.get(0).findElement(By.cssSelector(ConstantsUIElements.CSSSELECTOR_FOR_ACCEPTALLCOOKIES)).click();
 
     }
 
@@ -85,6 +87,13 @@ public class Browser {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("start-maximized");
         this.driver = new ChromeDriver(options);
+    }
+
+    public void initFirefoxOptions(String mainPath) {
+        System.setProperty(Constants.DRIVER_FIREFOX_SYS, StringUtils.concatenate( mainPath + Constants.DRIVER_FIREFOX_PATH));
+        FirefoxOptions options = new FirefoxOptions();
+        options.addArguments("start-maximized");
+        this.driver = new FirefoxDriver(options);
     }
 
     public WebElement findElementById(String id){

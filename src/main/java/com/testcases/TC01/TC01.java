@@ -20,12 +20,13 @@ public class TC01 {
     private Double maxUIValue,minUIValue;
     private Double maxValueToValidate,minValueToValidate;
 
-    @Given("The url {string}")
-    public void theUrl(String url)
+    @Given("The url and the browserName")
+    public void theUrl(DataTable dataTable)
     {
-        browser =  new Browser(Constants.DRIVER_CHROME);
+        Map<String, String> data = dataTable.asMap(String.class, String.class);
+        browser =  new Browser(data.get("browserName"));
         //Open Mercedes-benz United Kingdom market
-        browser.openUrl(url);
+        browser.openUrl(data.get("url"));
         browser.defaultAcceptCookies();
     }
 
