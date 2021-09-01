@@ -11,11 +11,12 @@ public final class ConstantsUIElements {
 
     //SHADOWROOT
     public static final String SHADOWROOT_TAGNAME_ACCEPTCOOKIES = "cmm-cookie-banner";
-    public static final String CSSSELECTOR_FOR_ACCEPTALLCOOKIES = "button[data-test='handle-accept-all-button']";
+    public static final String QUERY_CSSSELECTOR_FOR_ACCEPTALLCOOKIES = "return document.querySelector('cmm-cookie-banner').shadowRoot.querySelector('div.button-wrapper:nth-child(1) > button:nth-child(2)')";
 
     //SPAN
     public static final String SPAN_TEXT_EQUAL_TO = "//span[text()='{value}']";
     public static final String MOUSE_HOVER_CARTYPE_BY_SPAN = "//span[contains(text(),'{value}')]";
+    public static final String SPAN_LEFT_CAR_TYPES = "//span[@class='vmos_1nZ_z' and text()='{value}']";
 
     //CONTAINS
     public static final String CONTAINS_A_VALUE = "//a[contains(text(),'{value}')]";

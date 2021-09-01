@@ -39,12 +39,17 @@ public class TC01 {
 
         //Under “Our Models” - Select “Model: Hatchbacks”;
         browser.scrollToTextSpan(ConstantsUIElements.SPAN_TEXT_EQUAL_TO.replace("{value}",data.get("selectModel")));
+        if(!browser.isChrome()){ browser.switchToDefaultFrame();}
+        browser.javaExecutorClick(ConstantsUIElements.SPAN_LEFT_CAR_TYPES.replace("{value}","Hatchbacks"));
+
+        if(!browser.isChrome()){ browser.switchToFrame(ConstantsUIElements.MAIN_FRAME_ID); }
 
         //Mouse over the “A Class” model available and proceed to “Build your car”
         browser.mouseHoverValue(data.get("mouseOver"));
         browser.getDriver().findElement(By.xpath(ConstantsUIElements.CONTAINS_A_VALUE.replace("{value}",data.get("click")))).click();
 
         //Filter by Fuel type “Diesel”
+        if(!browser.isChrome()){ browser.switchToDefaultFrame(); }
         browser.waitUntilBy(By.xpath(ConstantsUIElements.CONTAINS_LEGEND_VALUE.replace("{value}",data.get("scrollTo"))));
         browser.scrollToTextSpan(ConstantsUIElements.CONTAINS_LEGEND_VALUE.replace("{value}",data.get("scrollTo")));
         browser.javaExecutorClick(ConstantsUIElements.LABEL_CONTAINS_AND_INPUT.replace("{value}",data.get("selectFuel")));
@@ -75,6 +80,7 @@ public class TC01 {
 
         Report.write("TC001",
                 StringUtils.getDateAndTime(),
+                browser.getBrowserType(),
                 StringUtils.concatenate(
                         "Values between ",
                         String.valueOf(minValueToValidate),
@@ -90,4 +96,6 @@ public class TC01 {
 
         browser.close();
     }
+
+
 }

@@ -10,7 +10,13 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.firefox.FirefoxProfile;
+import org.openqa.selenium.firefox.ProfilesIni;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.opera.OperaDriver;
+import org.openqa.selenium.opera.OperaOptions;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -69,12 +75,11 @@ public class Browser {
 
     public void defaultAcceptCookies(){
 
-        WebElement element = driver.findElement(By.tagName(ConstantsUIElements.SHADOWROOT_TAGNAME_ACCEPTCOOKIES));
-        List<WebElement> ele = (List<WebElement>) ((JavascriptExecutor) driver).executeScript(Constants.JAVAEXECUTOR_SHADOWROOT,element);
-
         waitUntilBy(By.linkText(ConstantsUIElements.TOPMENU_OURCARS_VALUE));
 
-        ele.get(0).findElement(By.cssSelector(ConstantsUIElements.CSSSELECTOR_FOR_ACCEPTALLCOOKIES)).click();
+        WebElement btnAcceptCookies = (WebElement) ((JavascriptExecutor) driver).executeScript(ConstantsUIElements.QUERY_CSSSELECTOR_FOR_ACCEPTALLCOOKIES);
+
+        btnAcceptCookies.click();
 
     }
 
@@ -107,6 +112,10 @@ public class Browser {
 
     public void switchToFrame(String frameID){
         driver.switchTo().frame(ConstantsUIElements.MAIN_FRAME_ID);
+    }
+
+    public void switchToDefaultFrame(){
+        driver.switchTo().defaultContent();
     }
 
     public void scrollToTextSpan(String xpath){
@@ -176,5 +185,15 @@ public class Browser {
 
         return false;
 
+    }
+
+    public String getBrowserType(){
+        Capabilities cap = ((RemoteWebDriver) driver).getCapabilities();
+        return cap.getBrowserName();
+
+    }
+
+    public boolean isChrome(){
+        return getBrowserType().equalsIgnoreCase(Constants.DRIVER_CHROME);
     }
 }

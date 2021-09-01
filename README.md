@@ -24,4 +24,7 @@ All of the above repositories are used in order for us to easily scaling the fra
 2. If there is any errors with the imports. Try to re-install the maven repositories. To do that, follow the bellow steps:
    - Open the Pom.xml file and run "maven clean" and the "maven install".
 3. Under the folder src->test->java open the class name "WebTestingTC01" and run this file.
+   - If there is a need to change between Browser, please follow:
+      - Under folder src->test->resources->TC001 open the file **TC001.feature**.
+Inside this folder you can change the value from line 5 from Chrome to Firefox.
 4. After the test is complete if there is no folder named "report" it will automatically generate one. 5. Inside the generate folder you will find 2 files: - One file is a .xslx file with the information about the test. It's like a report file. The other file will be an screenshot as required for the given Test Case.

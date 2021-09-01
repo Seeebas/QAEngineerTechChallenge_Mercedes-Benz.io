@@ -33,6 +33,7 @@ public final class Constants {
         List<String> list = new ArrayList<>();
         list.add("TestID");
         list.add("Execution Date");
+        list.add("Browser");
         list.add("Expected Result");
         list.add("Actual Result");
         list.add("Final Result");
